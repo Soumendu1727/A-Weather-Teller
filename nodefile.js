@@ -12,9 +12,7 @@ const fs = require("fs");
 var requests = require("requests");
 
 
-// const homefile = fs.readFile("index.html", "utf-8", (err, data) => {
-//   return data;
-// });
+
 const homefile = fs.readFileSync("index.html", "utf-8");
 const javafile = fs.readFileSync("script.js", "utf-8");
 
@@ -39,7 +37,7 @@ const server = http.createServer((req, res) =>
 {
     if(req.url == "/")
     {
-        requests("https://api.openweathermap.org/data/2.5/weather?lat=22.968963&lon=88.467575&appid=81b26771ac48bc7a73b09a37675b7856")
+        requests("USE API KEY HERE TO FETCH THE DATA")
         .on("data",(chunk) =>
         {
             const objData = JSON.parse(chunk);
