@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="javascript" href="script.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
+
+html, body
+{
+    font-size: 80%;
+    height: 100vh;
+}
+
+
+.box
+{
+    width: 25rem;
+    height: 35rem;
+    background-color: #a5bbdd;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    
+}
+
+.wave
+{
+    opacity: 0.4;
+    position: absolute;
+    top: 123%;
+    left: 50%;
+    background-color: rgb(215, 232, 243);
+    width: 50rem;
+    height: 50rem;
+    margin-left: -25rem;
+    margin-top: -25rem;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 3000ms infinite linear;
+    z-index: 1;
+}
+.wave•-three
+{
+    animation: drift 5000ms infinite linear; 
+    opacity: 0.1;
+    z-index: 2 !important;    
+    
+}
+
+.wave•-one
+{
+    animation: drift 5000ms infinite linear;
+    opacity: 0.2;
+    z-index: 2 !important;
+    
+}
+
+.wave•-two
+{
+    animation: drift 3000ms infinite linear;
+    opacity: 0.2;
+    z-index:2 !important;
+
+}
+.box::after
+{
+    
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes drift {
+    from{
+        transform: rotate(360deg);
+    }
+    from {
+        transform: rotate(360deg);
+    }
+}
+
+.information
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 45%;
+    z-index: 4;
+}
+
+.locate{
+    margin-top: 0.2rem;
+    text-align: center;
+    font-weight: 800;
+    font-size: 3rem;
+    font-weight: 600;
+    
+}
+
+.fa-temperature-low
+{
+    animation: rotates 3s linear infinite alternate;
+    font-size: 2.2rem;
+    color:  #524f4f;
+
+
+    
+}
+
+@keyframes rotates
+{
+    from{
+        transform: translate(-0.5rem);
+    }
+    to{
+        transform:translate(0.5rem);
+    }
+}
+
+p
+{
+    margin-top: 1.2rem;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: 600;
+    
+}
+
+.temp
+{
+    margin-top: 1.2rem;
+    text-align: center;
+    font-weight: 800;
+    font-size: 2.6rem;
+    font-weight: 600;
+
+}
+
+.maxmin
+{
+    margin-top: 1.2rem;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#weather
+{
+    height: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+#weather .fas{
+    font-size: 6rem;
+    animation: fas-anime 3s linear infinite alternate;
+    
+}
+@keyframes fas-anime
+{
+    from {
+        transform: scale(0.8);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+
+</style>
+<body>
+    <div class="box">
+        <div class="wave -one"></div>
+        <div class="wave -two"></div>
+        <div class="wave -three"> </div>
+
+        <div id= "weather">
+            <h2><i class="fas fa-cloud-rain" style = 'color:rgb(231, 231, 231)'></i></h2>
+        </div>
+
+        <div class="information">
+            <h3 class="locate">
+                
+                <i>{%location%}, {%country%}</i>
+            </h3>
+            
+            
+            <p id="date"> </p>
+
+            
+            <h2 class="temp"> <i class="fas fa-temperature-low"></i>     {%temperature1%}</h2>
+            <h3 class="maxmin" >Min : {%temperatureMin%} | Max : {%temperatureMax%} </h3>
+            
+
+        </div>
+    </div>
+
+    <script>
+        let curDate = document.getElementById("date");
+let weather = document.getElementById("weather");
+
+let tempStat = "%tempstatus%";
+
+
+if(tempStat == "Sunny")
+{
+  weather.innerHTML = "<h2><i class='fas fa-sun' style = 'color:orange'></i></h2>";
+}
+
+else if(tempStat == "Rainy")
+{
+  weather.innerHTML = "<h2><i class='fas fa-cloud-rain' style = 'color:rgb(231, 231, 231)'></i></h2>";
+  
+}
+else if(tempStat == "Clouds")
+{
+  weather.innerHTML = "<h2><i class='fas fa-cloud' style = 'color:rgb(231, 231, 231)'></i></h2>";
+  
+}
+
+else
+{
+  weather.innerHTML = "<h2><i class='fas fa-sun' style = 'color:orange'></i></h2>";
+}
+
+
+
+
+
+
+
+const getCurrentDay = () => 
+{
+  var weekday = new Array(7);
+  weekday[0] = "Sunday";
+  weekday[1] = "Monday";
+  weekday[2] = "Tuesday";
+  weekday[3] = "Wednesday";
+  weekday[4] = "Thursday";
+  weekday[5] = "Friday";
+  weekday[6] = "Saturday";
+
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let currentTime = new Date();
+
+  var day = weekday[currentTime.getDay()];
+
+  var month = months[currentTime.getMonth()+1];
+
+  var date= currentTime.getDate();
+
+  let hours = currentTime.getHours();
+
+  let min = currentTime.getMinutes();
+
+  if (min<10)
+  {
+    min = "0"+ min;
+  }
+
+  if (date<10)
+  {
+    date = "0"+ date;
+  }
+
+  if (hours<10)
+  {
+    hours = "0"+ hours;
+  }
+
+  return `${day} | ${month} ${date} | ${hours}.${min}` ;
+
+};
+ 
+curDate.innerText = getCurrentDay();
+
+
+
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
